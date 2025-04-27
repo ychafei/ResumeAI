@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Applicants for {{ job.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <h2>Applicants for {{ job.title }}</h2>
+    
+    {% if resumes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Applicant</th>
+                    <th>Email</th>
+                    <th>AI Score</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in resumes %}
+                <tr>
+                    <td>{{ resume.user.username }}</td>
+                    <td>{{ resume.user.email }}</td>
+                    <td>{{ resume.match_score }}%</td>
+                    <td>
+                        {% if resume.match_score >= 75 %}
+                            ✅ Shortlisted for Interview
+                        {% else %}
+                            ❌ Not Selected
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No applicants for this job yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

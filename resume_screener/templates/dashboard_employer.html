@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Employer Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <h2>Employer Dashboard</h2>
+
+    <h3>Your Job Listings</h3>
+    
+    {% if jobs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Description</th>
+                    <th>Applicants</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.description }}</td>
+                    <td><a href="{{ url_for('view_applicants', job_id=job.id) }}">View Applicants</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You haven't posted any jobs yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('view_users') }}" class="button">View All User Accounts</a>
+    <br>
+    <a href="{{ url_for('post_job') }}">Post a New Job</a>
+    <br>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
